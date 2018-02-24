@@ -1,6 +1,6 @@
 function getNewComic() {
 
-    var fs = require('fs')
+    const fs = require('fs');
     var files = fs.readdirSync('/comics/')
 
     return files[0]
