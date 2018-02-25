@@ -5,14 +5,23 @@
     <head> 
         <title>Calvin and Hobbes Voter</title>
 
-        <script src="js/changer.js"></script>
+        <script src="js/chnager.js"></script>
 
     </head>
 
     <body>
 
-        <img src="comics/19851118.gif">
+        <img id="imgClickAndChange"> </img>
+        <img id = "b"> </img)
 
     </body>
+
+    <script language="javascript"> 
+        
+        var [d1,c1,d2,c2] = generateComic();
+        document.getElementById('imgClickAndChange').src =d1+"/"+c1+".gif";
+        document.getElementById('b').src =d2+"/"+c2+".gif";
+
+    </script>
 
 </html>
