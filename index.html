@@ -11,18 +11,21 @@
 
     <body>
 
-        <img id="imgClickAndChange"> </img>
+        <img id="imgClickAndChange"> </img> <button type="button" onclick="makeNewComic()">Vote</button> 
         <br/>
-        <img id = "b"> </img)
+        <img id = "b"> </img> <button type="button" onclick="makeNewComic()">Vote</button>  
 
     </body>
 
     <script language="javascript"> 
         
-        var [d1,c1,d2,c2] = generateComic();
-        document.getElementById('imgClickAndChange').src =d1+"/"+c1;
-        document.getElementById('b').src =d2+"/"+c2;
+        makeNewComic()
 
+        function makeNewComic () {
+            var [d1,c1,d2,c2] = generateComic();
+            document.getElementById('imgClickAndChange').src =d1+"/"+c1;
+            document.getElementById('b').src =d2+"/"+c2;
+        }
         console.log(d1+"/"+c1)
 
     </script>
