@@ -9,35 +9,35 @@ function generateComic () {
     var dir2 = Math.floor((Math.random() * 4) + 1);
 
     if (dir1 == 1) {
-        var comic1 = Math.floor((Math.random() * file1.length));
+        var comic1 = file1[Math.floor((Math.random() * file1.length))];
     }
 
     else if (dir1 == 2) {
-        var comic1 = Math.floor((Math.random() * file2.length));
+        var comic1 = file2[Math.floor((Math.random() * file2.length))];
     }
 
     else if (dir1 == 3) {
-        var comic1 = Math.floor((Math.random() * file3.length));
+        var comic1 = file3[Math.floor((Math.random() * file3.length))];
     }
 
     else {
-        var comic1 = Math.floor((Math.random() * file4.length));
+        var comic1 = file4[Math.floor((Math.random() * file4.length))];
     }
 
     if (dir2 == 1) {
-        var comic2 = Math.floor((Math.random() * file1.length));
+        var comic2 = file1[Math.floor((Math.random() * file1.length))];
     }
 
     else if (dir2 == 2) {
-        var comic2 = Math.floor((Math.random() * file2.length));
+        var comic2 = file2[Math.floor((Math.random() * file2.length))];
     }
 
     else if (dir2 == 3) {
-        var comic2 = Math.floor((Math.random() * file3.length));
+        var comic2 = file3[Math.floor((Math.random() * file3.length))];
     }
 
     else {
-        var comic2 = Math.floor((Math.random() * file4.length));
+        var comic2 = file4[Math.floor((Math.random() * file4.length))];
     }
 
     if (dir1 == dir2 && comic1 == comic2) {
