@@ -49,7 +49,7 @@ function generateComic () {
         console.log(dir2)
         console.log(comic1)
         console.log(comic2)
-        return [dir1, comic1, dir2, comic2];
+        return ["comic"+dir1, comic1, "comic"+dir2, comic2];
     }
 
 }
