@@ -29,16 +29,11 @@
             messagingSenderId: "651064768229"
         };
 
-        var win1;
-        var win2;
-        var lose1;
-        var lose2;
+        var wins = [];
+        var loses = [];
 
         firebase.initializeApp(config);
         makeNewComic();
-
-        var totWins;
-        var totLoses;
 
         function getStats (fileName,id) {
 
@@ -48,6 +43,9 @@
 
                 console.log("Wins: " + snapshot.child("wins").val());
                 console.log("Loses: " + snapshot.child("loses").val());
+                
+                wins[id] = snapshot.child("wins").val();
+                loses[id] = snapshot.child("loses").val()
 
                 document.getElementById(id).innerHTML = "Wins: " + snapshot.child("wins").val() + " Loses: " + snapshot.child("loses").val();
 
@@ -66,8 +64,8 @@
 
                 var winningPath = String(document.getElementById('imgClickAndChange').src).split('/');
                 var losingPath = String(document.getElementById('b').src).split('/');
-                numWins = document.getElementById('top').innerHTML.split(" ")[1];
-                numLoses = document.getElementById('bottom').innerHTML.split(" ")[3];
+                numWins = wins['top'];
+                numLoses = wins['bottom'];
 
             }
 
@@ -75,8 +73,8 @@
 
                 var losingPath = String(document.getElementById('imgClickAndChange').src).split('/')
                 var winningPath = String(document.getElementById('b').src).split('/')
-                numWins = document.getElementById('top').innerHTML.split(" ")[3];
-                numLoses = document.getElementById('bottom').innerHTML.split(" ")[1];
+                numWins = wins['bottom'];
+                numLoses = wins['top'];
 
             }
 
