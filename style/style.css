@@ -1,0 +1,19 @@
+@font-face {
+    font-family: calvinFont;
+    src: url(CALVINN.ttf);
+}
+
+.imgContainer {
+    width: 33%;
+    margin: auto;
+}
+
+body {
+    font-family: calvinFont;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+  }

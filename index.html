@@ -5,24 +5,44 @@
     <head> 
         <title>Calvin and Hobbes Voter</title>
 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="style/style.css">
+
         <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         <script src="js/files.js"></script>
         <script src="js/action.js"></script>
         
     </head>
 
-    <body>
+    <body style="width:45%;margin:auto">
+
+        <div>
+
+            <h1>The Calvin and Hobbes Voter</h1>
+            <h3>Vote on which comic you think is better!</h3>
+
+        </div>
 
         <div id="uxTopContainer">
+            
             <img id="uxTopComic" onclick="var winner = document.getElementById('uxTopComic').src; var loser = document.getElementById('uxBottomComic').src; update(winner,loser);"> 
-            Wins: <span id="uxTopWins">-1</span>
-            Loses: <span id="uxTopLosses">-1</span>
+            
+
+                Wins: <span id="uxTopWins"></span>
+                Loses: <span id="uxTopLosses"></span>
+
+
         </div>
 
         <div id="uxBottomContainer">
-            <img id = "uxBottomComic" onclick="var winner = document.getElementById('uxBottomComic').src; var loser = document.getElementById('uxTopComic').src; update(winner,loser);">
-            Wins: <span id="uxBottomWins">-1</span>
-            Loses: <span id="uxBottomLosses">-1</span>
+
+            <img id="uxBottomComic" onclick="var winner = document.getElementById('uxBottomComic').src; var loser = document.getElementById('uxTopComic').src; update(winner,loser);">
+            
+                Wins: <span id="uxBottomWins"></span>
+                Loses: <span id="uxBottomLosses"></span>
+
         </div>
 
         <script>

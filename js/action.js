@@ -56,6 +56,7 @@ function setStatsFor (ID) {
 
 //TODO: update DB and squishing animation
 
+//updates the stats for the comics and prepares the next set of comics
 function update (winner, loser) {
 
     var winnerID = extractFileID(winner);
