@@ -3,17 +3,65 @@
     src: url(CALVINN.ttf);
 }
 
-.imgContainer {
-    width: 33%;
-    margin: auto;
+#PageWrapper {
+    width:60%;
+    margin:auto;
 }
 
-body {
-    font-family: calvinFont;
+#IconWrapper {
+    width:250px;
+    margin:auto;
 }
 
-.center {
-    margin-left: auto;
-    margin-right: auto;
-    width: 30%;
-  }
+.ComicWrapper {
+    border: 2px solid black;
+}
+
+.ComicWrapper > * {
+    /* display:inline-flex; */
+}
+
+.ComicWrapper .InfoWrapper {
+    border-right: 2px solid black;
+    font-size: 10px;
+    padding:0;
+}
+
+.ImgWrapper img {
+    width:inherit;
+    cursor:pointer;
+}
+
+.ThisComicWinsBtn {
+    width:100%;
+    border-radius: 25px;
+    color:white;
+    background-color: darkgray;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .ThisComicWinsBtn {
+        font-size:6px;
+    }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .ThisComicWinsBtn {
+        font-size:8px;
+    }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .ThisComicWinsBtn {
+        font-size:10px;
+    }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .ThisComicWinsBtn {
+        font-size:12px;
+    }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

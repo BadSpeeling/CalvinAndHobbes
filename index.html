@@ -2,21 +2,76 @@
 
 <html>
 
-    <head> 
+    <head>
+        
         <title>Calvin and Hobbes Voter</title>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">        <link rel="stylesheet" href="style/style.css">
 
         <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="js/comic_loader.js"></script>
+        <script src="js/db.js"></script>
+        <script src="js/driver.js"></script>
+
         <script src="js/files.js"></script>
-        <script src="js/action.js"></script>
         
     </head>
 
-    <body style="width:45%;margin:auto">
+
+    <body>
+
+        <div id="PageWrapper">
+
+            <div id="HeaderWrapper">
+
+                <div id="IconWrapper">
+                    <span id="Icon"><img src="./resources/logo.png"/></span>
+                </div>
+
+                <div id="IntroWrapper">
+                    <p>
+                        The Calvin and Hobbes Voter is a website designed to provide a fun, interactive way to view comic strips from the beloved series <i>Calvin and Hobbes</i>.  Strips are presented two at a time.  By either pressing the “<b>This comic wins!</b>” button tied to a given comic, or pressing the image of the preferred comic itself, you can vote on the better strip.  As a community, we can find out which strips are the best!
+                    </p>
+                    <p>
+                        This page is under development.  A leaderboard displaying comics by winning percentage is currently planned for creation.  To receive updates on progress, follow the project’s <a href="https://twitter.com/realDonaldTrump">Twitter account</a> or sign up for <a href="https://twitter.com/realDonaldTrump">email updates</a>.
+                    </p>
+                </div>
+                
+            </div>
+
+            <div id="comic1" class="ComicWrapper container">
+                <div class="row">
+                    <div class="InfoWrapper col-3">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12"><b>Comic Date: </b></div>
+                                <div class="col-12 ComicDateValue">XX/XX/XXXX</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12"><b>Wins: </b></div>
+                                <div class="col-12 WinsValue">X</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12"><b>Win Percentage: </b></div>
+                                <div class="col-12 WinPercentageValue">X%</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12"><button class="btn ThisComicWinsBtn">This comic wins!</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ImgWrapper col-9"><img src="./resources/ch851118.gif"/></div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </body>
+
+    <!-- <body style="width:45%;margin:auto">
 
         <div>
 
@@ -49,6 +104,6 @@
             newComics();
         </script>
 
-    </body>
+    </body> -->
 
 </html>

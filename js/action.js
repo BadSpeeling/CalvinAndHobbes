@@ -138,35 +138,5 @@ function printComicIDS () {
     console.log(extractFileID(document.getElementById("uxBottomComic").src));
 }
 
-//assumes that name is of the form {comicDirectory}/{comicFileName}
-//comicFileName is the primary key for each firebase entry
-function extractFileID (name) {
-    return name.substring(name.length-12, name.length-4);
-}
-
-function initDB () {
-
-    var json = {};
-
-    for (i = 0; i < file1.length; i++) {
-        json[extractFileID(file1[i])] = {wins:0,losses:0};
-    }
-    
-    for (i = 0; i < file2.length; i++) {
-        json[extractFileID(file2[i])] = {wins:0,losses:0};
-    }
-    
-    for (i = 0; i < file3.length; i++) {
-        json[extractFileID(file3[i])] = {wins:0,losses:0};
-    }
-    
-    for (i = 0; i < file4.length; i++) {
-        json[extractFileID(file4[i])] = {wins:0,losses:0};
-    }
-
-    var ref = firebase.database().ref("/");
-
-    ref.set(json);
 
 
-}
