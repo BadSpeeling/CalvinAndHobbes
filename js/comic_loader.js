@@ -1,7 +1,7 @@
 var comic_loader = {};
 
-comic_loader.start_date = new Date(1985,11-1,18);
-comic_loader.end_date = new Date(1995,12-1,31);
+comic_loader.start_date = new Date('1985-11-18');
+comic_loader.end_date = new Date('1995-12-31');
 comic_loader.runtime_milli = comic_loader.end_date - comic_loader.start_date;
 comic_loader.milli_per_day = 1000 * 1 * 60 * 60 * 24;
 comic_loader.comic_runtime_days = comic_loader.runtime_milli / comic_loader.milli_per_day;
@@ -25,7 +25,7 @@ comic_loader.get_comic_id = function(date) {
     var month = date.getMonth() + 1; //indexed 0-11, we want 01-12
     if (month < 10) month = '0' + month.toString();
 
-    var year = date.getFullYear().toString()
+    var year = date.getFullYear().toString();
 
     return year + month + day_of_month; //YYYYMMDD
 

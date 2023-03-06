@@ -66,3 +66,4 @@ db.update_comic_data = function(model) {
     firebase.database().ref('/comics/' + model.comic_id).set(to_post);
 
 }
+
