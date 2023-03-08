@@ -1,7 +1,7 @@
 var utils = {}
 
 utils.pretty_date = function (date) {
-    return `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+    return `${date.getUTCMonth()+1}/${date.getUTCDate()}/${date.getUTCFullYear()}`;
 }
 
 utils.pretty_percent = function (comic_model) {

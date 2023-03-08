@@ -84,7 +84,12 @@ const site = (req, res) => {
     });
 
     res.end(JSON.stringify({
-      data: generate_comic_url(date)
+      date,
+      url: generate_comic_url(date),
+      votes: {
+        wins: 0,
+        losses: 0
+      }
     }));
 
   }
