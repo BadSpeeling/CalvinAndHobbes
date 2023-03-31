@@ -1,8 +1,8 @@
 const http = require('http');
 const request = require('request');
-const fs = require('fs').promises;
+const fs = require('fs');
 
-__dirname = "C:/Users/efrye/source/other/CalvinAndHobbes" //D:/CalvinAndHobbes"
+root = "C:/Users/efrye/source/other/CalvinAndHobbes" //D:/CalvinAndHobbes"
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -34,33 +34,37 @@ const site = (req, res) => {
   
   if (file_ext == 'png' || file_ext == 'css' || file_ext == 'gif' || file_ext == 'html' || file_ext == "js") {
 
-    homepage = fs.readFile(__dirname + req.url)
-    .then((contents) => {
-      res.statusCode = 200;
+    //console.log(req.url + " : " + file_ext);
 
-      content_type = '';
-      switch (file_ext){
-        case 'png':
-        case 'gif':
-          content_type = 'images/' + file_ext;
-          break;
-        case 'css':
-        case 'html':
-          content_type = 'text/' + file_ext;
-          break;
-        case 'js':
-          content_type = 'text/javascript';
-        default:
-          content_type = 'text/plain';
-      }
+    const data = fs.readFileSync(root + req.url)
+    res.statusCode = 200;
 
-      res.setHeader('Content-Type', content_type);
-      res.end(contents);
-    })
-    .catch((err) => {
-      res.statusCode = 404;
-      res.end()
-    });
+    content_type = '';
+
+    switch (file_ext){
+      case 'png':
+      case 'gif':
+        content_type = 'images/' + file_ext;
+        break;
+      case 'css':
+      case 'html':
+        content_type = 'text/' + file_ext;
+        break;
+      case 'js':
+        content_type = 'text/javascript';
+        break;
+      default:
+        content_type = 'text/plain';
+    }
+
+    //console.log(req.url + " : " + content_type);
+
+    res.setHeader('Content-Type', content_type);
+    res.end(data);
+
+    //res.statusCode = 404;
+    //res.end()
+
   }
   else if (path[path.length-1] == 'comic') {
 
