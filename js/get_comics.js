@@ -50,7 +50,7 @@ function get_comic(container_id) {
         });
     }
 
-        checkImage()
+    checkImage()
             .then((date) => {
                 $.get('http://localhost:3000/comic?comic_id='+get_comic_id(date), (comic_result) => {
                         
@@ -79,16 +79,10 @@ function generate_random_date () {
 //get the file name based on a date for the hosting service
 function generate_comic_url (date) {
 
-    var day_of_month = date.getDate();
-    if (day_of_month < 10) day_of_month = '0' + day_of_month.toString(); //must be 2 digits
-
-    var month = date.getMonth() + 1; //indexed 0-11, we want 01-12
-    if (month < 10) month = '0' + month.toString();
-
-    var year = date.getFullYear().toString().substring(2); //we want YY ex. 85 or 95
-
-    var file_name = "ch" + year + month + day_of_month + ".gif";
-    return `http://picayune.uclick.com/comics/ch/${date.getFullYear()}/${file_name}`;
+    let comic_id = get_comic_id(date);
+    
+    let file_name = "ch" + comic_id + ".gif";
+    return `http://picayune.uclick.com/comics/ch/19${comic_id.substring(0,2)}/${file_name}`;
 
 }
 
