@@ -14,17 +14,14 @@
 }
 
 .ComicWrapper {
-    border: 2px solid black;
-}
-
-.ComicWrapper > * {
-    /* display:inline-flex; */
+    margin-bottom: 5px;
 }
 
 .ComicWrapper .InfoWrapper {
-    border-right: 2px solid black;
+    border: 2px solid black;
     font-size: 10px;
-    padding:0;
+    padding:5px;
+    border-radius: 10px;
 }
 
 .ImgWrapper img {

@@ -13,10 +13,11 @@
         <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-        
-        <script src="js/get_comic_url.js"></script>
+
         <script src="js/utils.js"></script>
-        <script src="js/test.js"></script>
+        <script src="js/get_comics.js"></script>
+        <script src="js/submit_vote.js"></script>
+        <script src="js/driver.js"></script>
 
     </head>
 
@@ -41,8 +42,9 @@
                 
             </div>
 
-            <div id="comic1" class="ComicWrapper container">
-                <div class="row">
+            <div class="container">
+       
+                <div id="comic1" class="ComicWrapper row">
                     <div class="InfoWrapper col-3">
                         <div class="container">
                             <div class="row">
@@ -64,6 +66,30 @@
                     </div>
                     <div class="ImgWrapper col-9"><img src="resources/ch851118.gif"/></div>
                 </div>
+            
+                <div id="comic2" class="ComicWrapper row">
+                    <div class="InfoWrapper col-3">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12"><b>Comic Date: </b></div>
+                                <div class="col-12 ComicDateValue">XX/XX/XXXX</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12"><b>Wins: </b></div>
+                                <div class="col-12 WinsValue">X</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12"><b>Win Percentage: </b></div>
+                                <div class="col-12 WinPercentageValue">X%</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12"><button class="btn ThisComicWinsBtn">This comic wins!</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ImgWrapper col-9"><img src="resources/ch851118.gif"/></div>
+                </div>
+
             </div>
 
         </div>

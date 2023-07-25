@@ -1,6 +1,7 @@
 const http = require('http');
-const request = require('request');
 const fs = require('fs');
+
+const {write_vote_result,mongo_get_comic} = require('./db_functionality');
 
 root = "C:/Users/efrye/source/other/CalvinAndHobbes" //D:/CalvinAndHobbes"
 
@@ -18,8 +19,7 @@ Date.prototype.addDays = function(days) {
 }
 
 const site = (req, res) => {
-  console.log("url: " + req.url);
-  
+
   path = req.url.split('?')[0].split('/');
   
   //don't give any access to anything in the server folder
@@ -32,9 +32,8 @@ const site = (req, res) => {
   file = path[path.length-1];
   file_ext = file.indexOf('.') != -1 ? file.substring(file.indexOf('.')+1) : null;
   
+  //a file of some kind
   if (file_ext == 'png' || file_ext == 'css' || file_ext == 'gif' || file_ext == 'html' || file_ext == "js") {
-
-    //console.log(req.url + " : " + file_ext);
 
     const data = fs.readFileSync(root + req.url)
     res.statusCode = 200;
@@ -57,8 +56,6 @@ const site = (req, res) => {
         content_type = 'text/plain';
     }
 
-    //console.log(req.url + " : " + content_type);
-
     res.setHeader('Content-Type', content_type);
     res.end(data);
 
@@ -66,35 +63,62 @@ const site = (req, res) => {
     //res.end()
 
   }
+  //the comic endpoint, for requesting the stats of a C&H comic
   else if (path[path.length-1] == 'comic') {
 
-    var date = generate_random_date();
-    var url = generate_comic_url(date);
+    let url_param = req.url.split('?')[1]
+     
+    let comic_id = "";
+    
+    if (url_param) comic_id = parse_url_param(url_param).comic_id;
 
-    request(url, {}, (err,comic_res,body) => {
-        
-        var status_code = comic_res && comic_res.statusCode;
+    if (comic_id) {
+      
+      mongo_get_comic(comic_id).then((comic_data) => {
 
-        if (status_code == 200) {
-            res.statusCode = 200;
-            console.log(date.toUTCString() + ' succeeded');
-        }
+        let date = parse_date(comic_id);
+        let url = generate_comic_url(comic_id);
+  
+        res.end(JSON.stringify({
+          date,
+          url,
+          votes: {
+            wins: comic_data.wins,
+            losses: comic_data.losses
+          }
+        }));
+  
+      });
+      
+    }
+    else {
+      res.statusCode = 400;
+      res.end();
+    }
 
-        else {
-            res.statusCode = 500;
-            console.log(date.toUTCString() + ' failed');
-        }
+  }
+  //the vote endpoint, for submitting a vote for a C&H comic
+  else if (path[path.length-1] == 'vote') {
+
+    let body = [];
+    req.on('data', (chunk) => {
+      body.push(chunk);
+    }).on('end', () => {
+      body = Buffer.concat(body).toString();
+      
+      let vote_doc = JSON.parse(body);
+      
+      if ('winner' in vote_doc && 'loser' in vote_doc) {
+        write_vote_result(vote_doc);
+        res.statusCode = 200;
+        res.end();
+      }
+      else {
+        res.statusCode = 400;
+        res.end();
+      }
 
     });
-
-    res.end(JSON.stringify({
-      date,
-      url: generate_comic_url(date),
-      votes: {
-        wins: 0,
-        losses: 0
-      }
-    }));
 
   }
   else {
@@ -104,22 +128,20 @@ const site = (req, res) => {
    
 }
 
-const server = http.createServer(site);
+run_server();
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+function run_server () {
 
-function generate_comic_url (date) {
-    return `http://picayune.uclick.com/comics/ch/${date.getUTCFullYear().toString()}/ch${get_comic_id(date)}.gif`;
+    const server = http.createServer(site);
+
+    server.listen(port, hostname, () => {
+      console.log(`Server running at http://${hostname}:${port}/`);
+    });
+
 }
 
-function generate_random_date () {
-  
-  var days_diff = (info.end_date - info.start_date)/ (1000 * 60 * 60 * 24) + 1;
-  var cur_date = info.start_date;
-  return cur_date.addDays(Math.random() * days_diff);
-  
+function generate_comic_url (comic_id) {
+    return `http://picayune.uclick.com/comics/ch/${"19"+comic_id.substring(0,2)}/ch${comic_id}.gif`;
 }
 
 function get_comic_id (date) {
@@ -135,3 +157,34 @@ function get_comic_id (date) {
   return year + month + day_of_month; //YYMMDD
 
 }
+
+//comic_id of form YYMMDD
+function parse_date (comic_id) {
+
+  const re = /^(\d{2})(\d{2})(\d{2})$/;
+  comic_id_parse_results = comic_id.match(re);
+
+  if (comic_id_parse_results) {
+    return new Date(comic_id_parse_results[1],comic_id_parse_results[2]-1,comic_id_parse_results[3]); //the month value is -1, because month is 0-11 not 1-12
+  }
+  else {
+    throw new Error(comic_id + " is not of the form chYYMMDD.gif");
+  }
+
+}
+
+function parse_url_param (enc) {
+
+  let ret = {};
+
+  let params = enc.split("&");
+
+  for (i = 0; i < params.length; i++) {
+    let param = params[i].split("=");
+    if (param[0] && param[1]) ret[param[0]] = param[1];
+  }
+
+  return ret;
+
+}
+
