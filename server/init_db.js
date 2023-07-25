@@ -1,3 +1,5 @@
+const db_client = require('./CH_Voter').db_client;
+
 // async function foo (cur_date) {
 
 //     let batch_size = 10;
@@ -88,7 +90,7 @@ function handle_comics(comic_dates) {
         comic_docs_to_insert = comic_docs_to_insert.concat({"comic_id": get_comic_id(element), "wins": 0, "losses": 0});
     });
 
-    write_initial_comics(comic_dates);
+    write_initial_comics(comic_docs_to_insert);
 
 }
 
@@ -111,5 +113,5 @@ async function write_initial_comics(comic_docs_to_insert) {
 
 }
 
-//handle_comics(create_date_list());
-write_initial_comics([{"TEST":"to be deleted"}]);
+handle_comics(create_date_list());
+//write_initial_comics([{"TEST":"to be deleted"}]);
