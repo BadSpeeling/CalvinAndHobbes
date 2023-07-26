@@ -1,8 +1,12 @@
-const db_client = require('./CH_Voter').db_client;
+const new_client = require('./CH_Voter').new_client;
 
 async function write_vote_result (vote_result) {
 
+  let db_client = new_client();
+
+  if (db_client) {
     try {
+
       await db_client.connect();
       const ch_voter_db = db_client.db("CH_Voter");
       const comics_coll = ch_voter_db.collection("comics");
@@ -20,24 +24,28 @@ async function write_vote_result (vote_result) {
     finally {
       db_client.close();
     }
+  }
 
 }
 
 async function mongo_get_comic(comic_id) {
 
     let comic;
+    let db_client = new_client();
 
-    try {
-      await db_client.connect();
-      const ch_voter_db = db_client.db("CH_Voter");
-      const comics_coll = ch_voter_db.collection("comics");
+    if (db_client) {
+      try {
+        await db_client.connect();
+        const ch_voter_db = db_client.db("CH_Voter");
+        const comics_coll = ch_voter_db.collection("comics");
 
-      comic = await comics_coll.findOne({
-          "comic_id":comic_id
-      });
-    }
-    finally {
-      await db_client.close();
+        comic = await comics_coll.findOne({
+            "comic_id":comic_id
+        });
+      }
+      finally {
+        await db_client.close();
+      }
     }
 
     return comic;

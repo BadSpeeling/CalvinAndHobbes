@@ -1,4 +1,4 @@
-const db_client = require('./CH_Voter').db_client;
+const new_client = require('./CH_Voter').new_client;
 
 // async function foo (cur_date) {
 
@@ -103,6 +103,7 @@ function checkImage (src, good, bad) {
 
 async function write_initial_comics(comic_docs_to_insert) {
 
+    let db_client = new_client();
     await db_client.connect();
 
     const ch_voter_db = db_client.db('CH_Voter');

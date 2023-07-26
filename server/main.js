@@ -76,19 +76,27 @@ const site = (req, res) => {
       
       mongo_get_comic(comic_id).then((comic_data) => {
 
-        let date = parse_date(comic_id);
-        let url = generate_comic_url(comic_id);
-  
-        res.end(JSON.stringify({
-          date,
-          url,
-          votes: {
-            wins: comic_data.wins,
-            losses: comic_data.losses
-          }
-        }));
-  
-      });
+        if (comic_data) {
+
+          let date = parse_date(comic_id);
+          let url = generate_comic_url(comic_id);
+    
+          res.end(JSON.stringify({
+            date,
+            url,
+            votes: {
+              wins: comic_data.wins,
+              losses: comic_data.losses
+            }
+          }));
+
+        }
+        else {
+          res.statusCode = 500;
+          res.end();
+        }
+
+      }).catch((err) => {console.log(err);});
       
     }
     else {
@@ -109,7 +117,7 @@ const site = (req, res) => {
       let vote_doc = JSON.parse(body);
       
       if ('winner' in vote_doc && 'loser' in vote_doc) {
-        write_vote_result(vote_doc);
+        write_vote_result(vote_doc).catch((err) => {console.log(err);});
         res.statusCode = 200;
         res.end();
       }
@@ -120,6 +128,9 @@ const site = (req, res) => {
 
     });
 
+  }
+  else if (path[path.length-1] == 'ping') {
+    atlas_ping();
   }
   else {
     res.statusCode = 404;
@@ -188,3 +199,15 @@ function parse_url_param (enc) {
 
 }
 
+async function atlas_ping() {
+    try {
+      // Connect the client to the server	(optional starting in v4.7)
+      await client.connect();
+      // Send a ping to confirm a successful connection
+      await client.db("admin").command({ ping: 1 });
+      console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    } finally {
+      // Ensures that the client will close when you finish/error
+      await client.close();
+    }
+  }
