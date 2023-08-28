@@ -13,6 +13,10 @@
     margin:auto;
 }
 
+#ComicsWrapper {
+    display:none;
+}
+
 .ComicWrapper {
     margin-bottom: 5px;
 }

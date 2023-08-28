@@ -3,19 +3,26 @@ driver.model = {};
 
 $(document).ready(() => {
 
+    reset_model('comic1');
+    reset_model('comic2');
+
     load_comic_set();
     $('.ThisComicWinsBtn').click(comicSubmitBtnClick);
 
 });
+
+function reset_model (comic_id) {
+    driver.model[comic_id] = {comic_id: null,isLoaded: false};
+}
 
 function load_comic_set() {
     get_comic('comic1');
     get_comic('comic2');
 }
 
-function display_comic(id, comic_data) {
+function display_comic(container_id, comic_data) {
 
-    var comicWrapper = $('#'+id+'.ComicWrapper');
+    var comicWrapper = $('#'+container_id+'.ComicWrapper');
     var infoWrapper = comicWrapper.find('.InfoWrapper');
 
     comicWrapper.find('.ImgWrapper img').attr({'src':comic_data.url});
@@ -23,8 +30,23 @@ function display_comic(id, comic_data) {
     infoWrapper.find('.WinsValue').text(comic_data.votes.wins);
     infoWrapper.find('.WinPercentageValue').text(utils.pretty_percent(comic_data.votes));
 
-    driver.model[id] = get_comic_id(comic_data.date);
+    driver.model[container_id] = {
+        "comic_id": get_comic_id(comic_data.date),
+        "isLoaded": true
+    };
 
+    if (show_comics()) {
+        $('#ComicsWrapper').slideToggle('fast');
+    }
+
+}
+
+function get_comic_id (container_id) {
+    return driver.model[container_id].comic_id;
+}
+
+function show_comics() {
+    return driver.model['comic1'].isLoaded && driver.model['comic2'].isLoaded;
 }
 
 function get_comic_id (date) {
@@ -39,4 +61,4 @@ function get_comic_id (date) {
   
     return year + month + day_of_month; //YYMMDD
   
-  }
+}
