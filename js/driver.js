@@ -1,6 +1,10 @@
 var driver = {};
 driver.model = {};
 
+driver.model.get_comic_id = (container_id) => {
+    return driver.model[container_id].comic_id;        
+}
+
 $(document).ready(() => {
 
     reset_model('comic1');
@@ -39,10 +43,6 @@ function display_comic(container_id, comic_data) {
         $('#ComicsWrapper').slideToggle('fast');
     }
 
-}
-
-function get_comic_id (container_id) {
-    return driver.model[container_id].comic_id;
 }
 
 function show_comics() {
