@@ -1,4 +1,9 @@
 {
+  "name": "calvin-and-hobbes-voter",
+  "version": "0.0.1",
+  "engines" :{
+    "node": "18.x || 16.x"
+  },
   "dependencies": {
     "mongodb": "^5.0.1"
   }

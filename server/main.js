@@ -1,12 +1,15 @@
 const http = require('http');
 const fs = require('fs');
+const process = require('process');
 
 const {write_vote_result,mongo_get_comic} = require('./db_functionality');
 
-root = "C:/Users/efrye/source/other/CalvinAndHobbes" //D:/CalvinAndHobbes"
+let is_local = process.argv.includes('-l');
 
-const hostname = '127.0.0.1';
-const port = 3000;
+root = process.cwd(); //"C:/Users/efrye/source/other/CalvinAndHobbes" "D:/CalvinAndHobbes"
+
+const hostname = is_local ? '127.0.0.1' : "https://secure-scrubland-71593-6662b8f0380a.herokuapp.com/";
+const port = 5001;
 
 var info = {};
 info.start_date = new Date('1985-11-18');

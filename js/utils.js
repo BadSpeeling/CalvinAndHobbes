@@ -20,3 +20,7 @@ utils.pretty_percent = function (comic_model) {
     return ret;
 
 }
+
+utils.get_root = function () {
+    return window.location.origin + (window.location.port ? "" : ":" + window.location.port);
+}

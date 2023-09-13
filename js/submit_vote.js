@@ -13,7 +13,7 @@ function submitVote (body) {
 
     $.ajax({
         type:'POST',
-        url:'http://localhost:3000/vote',
+        url: utils.get_root() + '/vote',
         data: JSON.stringify(body),
         success: () => {
 

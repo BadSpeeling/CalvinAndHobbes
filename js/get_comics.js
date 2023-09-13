@@ -52,7 +52,7 @@ function get_comic(container_id) {
 
     checkImage()
             .then((date) => {
-                $.get('http://localhost:3000/comic?comic_id='+get_comic_id(date), (comic_result) => {
+                $.get(utils.get_root() + '/comic?comic_id='+get_comic_id(date), (comic_result) => {
                         
                     comic_result = JSON.parse(comic_result);
                     comic_result.date = new Date(comic_result.date);
