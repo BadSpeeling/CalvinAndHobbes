@@ -8,7 +8,7 @@ let is_local = process.argv.includes('-l');
 
 root = process.cwd(); //"C:/Users/efrye/source/other/CalvinAndHobbes" "D:/CalvinAndHobbes"
 
-const hostname = is_local ? '127.0.0.1' : "https://secure-scrubland-71593-6662b8f0380a.herokuapp.com/";
+//const hostname = is_local ? '127.0.0.1' : "https://secure-scrubland-71593-6662b8f0380a.herokuapp.com/";
 const port = 5001;
 
 var info = {};
@@ -148,8 +148,8 @@ function run_server () {
 
     const server = http.createServer(site);
 
-    server.listen(port, hostname, () => {
-      console.log(`Server running at http://${hostname}:${port}/`);
+    server.listen(port, () => {
+      console.log(`Server running on port ${port}`);
     });
 
 }
