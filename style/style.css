@@ -4,8 +4,11 @@
 }
 
 #PageWrapper {
+    background:white;
     width:60%;
     margin:auto;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 #IconWrapper {
@@ -38,6 +41,10 @@
     border-radius: 25px;
     color:white;
     background-color: darkgray;
+}
+
+body {
+    background-image: url("..\\resources\\tiger_stripe.png");
 }
 
 /* Extra small devices (phones, 600px and down) */
