@@ -5,10 +5,12 @@
 
 #PageWrapper {
     background:white;
-    width:60%;
     margin:auto;
-    padding: 10px;
-    border-radius: 5px;
+    margin-top:25px;
+    margin-bottom:25px; 
+    padding: 20px;
+    border-radius: 10px;
+    width:80%;
 }
 
 #IconWrapper {
@@ -24,16 +26,27 @@
     margin-bottom: 5px;
 }
 
-.ComicWrapper .InfoWrapper {
+.InfoWrapper {
     border: 2px solid black;
     font-size: 10px;
-    padding:5px;
+    padding: 10px;
+    padding-bottom: 5px;
     border-radius: 10px;
+    margin-bottom: auto;   
+}
+
+.InfoSection {
+    height:25%;
 }
 
 .ImgWrapper img {
     width:inherit;
     cursor:pointer;
+}
+
+.ThisComicWinsBtnWrapper {
+    width:75%;
+    margin:auto;
 }
 
 .ThisComicWinsBtn {
@@ -49,27 +62,81 @@ body {
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
+    
     .ThisComicWinsBtn {
         font-size:6px;
     }
+
+    .InfoSection {
+        font-size:6px;
+    }
+
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
+    
     .ThisComicWinsBtn {
         font-size:8px;
     }
+
+    .InfoSection {
+        font-size:8px;
+    }
+
 }
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
+    
     .ThisComicWinsBtn {
         font-size:10px;
     }
+    
+    .InfoSection {
+        font-size:10px;
+    }
+
 }
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+    
     .ThisComicWinsBtn {
         font-size:12px;
     }
+
+    .InfoSection {
+        font-size:12px;
+    }
+
 }
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {}
+@media only screen and (min-width: 1200px) {
+
+    .ThisComicWinsBtnWrapper {
+        width:85%;
+    }
+
+    .ThisComicWinsBtn {
+        font-size:14px;
+    }
+
+    .InfoSection {
+        font-size:14px;
+    }
+
+    #PageWrapper {
+        width:60%;
+    }
+
+}
+
+@media only screen and (min-width: 1800px) {
+
+    #PageWrapper {
+        width:50%;
+    }
+
+    .ThisComicWinsBtn {
+        font-size:12px;
+    }
+
+}
