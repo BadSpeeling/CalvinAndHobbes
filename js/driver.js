@@ -35,21 +35,25 @@ function display_comic(container_id, comic_data) {
     infoWrapper.find('.WinPercentageValue').text(utils.pretty_percent(comic_data.votes));
 
     driver.model[container_id] = {
-        "comic_id": get_comic_id(comic_data.date),
+        "comic_id": parse_comic_id(comic_data.date),
         "isLoaded": true
     };
 
-    if (show_comics()) {
-        $('#ComicsWrapper').slideToggle('fast');
+    if (can_show_comics()) {
+        set_comics_display('slow');
     }
 
 }
 
-function show_comics() {
+function set_comics_display (speed) {
+    $('#ComicsWrapper').slideToggle(speed);
+}
+
+function can_show_comics() {
     return driver.model['comic1'].isLoaded && driver.model['comic2'].isLoaded;
 }
 
-function get_comic_id (date) {
+function parse_comic_id (date) {
 
     var day_of_month = date.getUTCDate();
     if (day_of_month < 10) day_of_month = '0' + day_of_month.toString(); //must be 2 digits

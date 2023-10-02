@@ -17,7 +17,8 @@ function submitVote (body) {
         data: JSON.stringify(body),
         success: () => {
 
-            $('#ComicsWrapper').slideToggle('fast');
+            set_comics_display('slow');
+
             reset_model('comic1');
             reset_model('comic2');
 
