@@ -3,6 +3,7 @@ const fs = require('fs');
 const process = require('process');
 
 const {write_vote_result,mongo_get_comic} = require('./db_functionality');
+const {log_error} = require('./logging.js');
 
 let is_local = process.argv.includes('-l');
 
@@ -38,7 +39,7 @@ const site = (req, res) => {
   //a file of some kind
   if (file_ext == 'png' || file_ext == 'css' || file_ext == 'gif' || file_ext == 'html' || file_ext == "js") {
 
-    const data = fs.readFileSync(root + req.url)
+    const data = fs.readFileSync(root + req.url);
     res.statusCode = 200;
 
     content_type = '';
@@ -75,31 +76,42 @@ const site = (req, res) => {
     
     if (url_param) comic_id = parse_url_param(url_param).comic_id;
 
+    //we have a comic_id, try to get the comic data for it
     if (comic_id) {
       
-      mongo_get_comic(comic_id).then((comic_data) => {
+      mongo_get_comic(comic_id)
+        .then((comic_data) => {
 
-        if (comic_data) {
+          if (comic_data) {
 
-          let date = parse_date(comic_id);
-          let url = generate_comic_url(comic_id);
-    
-          res.end(JSON.stringify({
-            date,
-            url,
-            votes: {
-              wins: comic_data.wins,
-              losses: comic_data.losses
-            }
-          }));
+            let date = parse_date(comic_id);
+            let url = generate_comic_url(comic_id);
+      
+            res.statusCode = 200;
+            res.end(JSON.stringify({
+              date,
+              url,
+              votes: {
+                wins: comic_data.wins,
+                losses: comic_data.losses
+              }
+            }));
 
-        }
-        else {
+          }
+          else {
+            res.statusCode = 500;
+            res.end();
+          }
+
+        })
+        .catch((err) => {
+
+          log_error({desc:"Error loading comic data from DB",comic_id,error:err});
+
           res.statusCode = 500;
           res.end();
-        }
 
-      }).catch((err) => {console.log(err);});
+        });
       
     }
     else {
@@ -120,7 +132,7 @@ const site = (req, res) => {
       let vote_doc = JSON.parse(body);
       
       if ('winner' in vote_doc && 'loser' in vote_doc) {
-        write_vote_result(vote_doc).catch((err) => {console.log(err);});
+        write_vote_result(vote_doc).catch((err) => {log_error({desc:"Error writing vote data to DB",vote_doc,error:err});});
         res.statusCode = 200;
         res.end();
       }
