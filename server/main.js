@@ -5,11 +5,8 @@ const process = require('process');
 const {write_vote_result,mongo_get_comic} = require('./db_functionality');
 const {log_error} = require('./logging.js');
 
-let is_local = process.argv.includes('-l');
-
 root = process.cwd(); //"C:/Users/efrye/source/other/CalvinAndHobbes" "D:/CalvinAndHobbes"
 
-//const hostname = is_local ? '127.0.0.1' : "https://secure-scrubland-71593-6662b8f0380a.herokuapp.com/";
 const port = process.env.PORT || 3000;;
 
 var info = {};
@@ -24,7 +21,7 @@ Date.prototype.addDays = function(days) {
 
 const site = (req, res) => {
 
-  path = req.url.split('?')[0].split('/');
+  let path = req.url.split('?')[0].split('/');
   
   //don't give any access to anything in the server folder
   if (path.includes('server')) {
@@ -33,38 +30,44 @@ const site = (req, res) => {
   }
 
   //check if the end of the path is a file being requested
-  file = path[path.length-1];
-  file_ext = file.indexOf('.') != -1 ? file.substring(file.indexOf('.')+1) : null;
+  let file = path[path.length-1];
+  let file_ext = file.indexOf('.') != -1 ? file.substring(file.indexOf('.')+1) : null;
   
   //a file of some kind
   if (file_ext == 'png' || file_ext == 'css' || file_ext == 'gif' || file_ext == 'html' || file_ext == "js") {
 
-    const data = fs.readFileSync(root + req.url);
-    res.statusCode = 200;
+    const data = fs.readFile(root + req.url, (err,data) => {
 
-    content_type = '';
+      if (err) {
+        log_error({desc: req.url + " could not be found", error: err})
+        res.statusCode = 404;
+        res.end();
+      }
 
-    switch (file_ext){
-      case 'png':
-      case 'gif':
-        content_type = 'images/' + file_ext;
-        break;
-      case 'css':
-      case 'html':
-        content_type = 'text/' + file_ext;
-        break;
-      case 'js':
-        content_type = 'text/javascript';
-        break;
-      default:
-        content_type = 'text/plain';
-    }
+      res.statusCode = 200;
 
-    res.setHeader('Content-Type', content_type);
-    res.end(data);
+      content_type = '';
 
-    //res.statusCode = 404;
-    //res.end()
+      switch (file_ext){
+        case 'png':
+        case 'gif':
+          content_type = 'images/' + file_ext;
+          break;
+        case 'css':
+        case 'html':
+          content_type = 'text/' + file_ext;
+          break;
+        case 'js':
+          content_type = 'text/javascript';
+          break;
+        default:
+          content_type = 'text/plain';
+      }
+
+      res.setHeader('Content-Type', content_type);
+      res.end(data);
+
+    });
 
   }
   //the comic endpoint, for requesting the stats of a C&H comic
