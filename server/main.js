@@ -34,7 +34,7 @@ const site = (req, res) => {
   let file_ext = file.indexOf('.') != -1 ? file.substring(file.indexOf('.')+1) : null;
   
   //a file of some kind
-  if (file_ext == 'png' || file_ext == 'css' || file_ext == 'gif' || file_ext == 'html' || file_ext == "js") {
+  if (file_ext == 'png' || file_ext == 'css' || file_ext == 'gif' || file_ext == 'html' || file_ext == "js" || file_ext == "ico") {
 
     const data = fs.readFile(root + req.url, (err,data) => {
 
@@ -59,6 +59,9 @@ const site = (req, res) => {
           break;
         case 'js':
           content_type = 'text/javascript';
+          break;
+        case 'ico':
+          content_type = 'image/x-icon';
           break;
         default:
           content_type = 'text/plain';
