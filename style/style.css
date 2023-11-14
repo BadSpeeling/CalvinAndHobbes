@@ -11,6 +11,15 @@
     display: none;
 }
 
+#ErrorImgWrapper {
+    text-align:center;
+}
+
+#FooterImgWrapper {
+    margin:auto;
+    width:fit-content;
+}
+
 #PageWrapper {
     background:white;
     margin:auto;
