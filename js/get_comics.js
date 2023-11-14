@@ -30,7 +30,7 @@ function get_comic(container_id) {
                     comic_result = JSON.parse(comic_result);
                     comic_result.date = new Date(comic_result.date);
 
-                    display_comic(container_id, comic_result);
+                    set_comics(container_id, comic_result);
 
                 });
             })
