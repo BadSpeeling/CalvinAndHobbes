@@ -59,7 +59,6 @@ function show_wrapper(id) {
     //wait the amount of time remaining if it hasn't
     if (id === 'ComicsWrapper') {
         let loading_timer = driver.loading.check_min_wait_time();
-        console.log(loading_timer);
 
         if (loading_timer) {
             setTimeout(handle_wrapper,loading_timer);
