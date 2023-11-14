@@ -43,32 +43,34 @@ const site = (req, res) => {
         res.statusCode = 404;
         res.end();
       }
+      else {
+        res.statusCode = 200;
 
-      res.statusCode = 200;
+        content_type = '';
 
-      content_type = '';
+        switch (file_ext){
+          case 'jpg':
+          case 'png':
+          case 'gif':
+            content_type = 'images/' + file_ext;
+            break;
+          case 'css':
+          case 'html':
+            content_type = 'text/' + file_ext;
+            break;
+          case 'js':
+            content_type = 'text/javascript';
+            break;
+          case 'ico':
+            content_type = 'image/x-icon';
+            break;
+          default:
+            content_type = 'text/plain';
+        }
 
-      switch (file_ext){
-        case 'png':
-        case 'gif':
-          content_type = 'images/' + file_ext;
-          break;
-        case 'css':
-        case 'html':
-          content_type = 'text/' + file_ext;
-          break;
-        case 'js':
-          content_type = 'text/javascript';
-          break;
-        case 'ico':
-          content_type = 'image/x-icon';
-          break;
-        default:
-          content_type = 'text/plain';
+        res.setHeader('Content-Type', content_type);
+        res.end(data);
       }
-
-      res.setHeader('Content-Type', content_type);
-      res.end(data);
 
     });
 
