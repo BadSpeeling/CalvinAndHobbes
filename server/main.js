@@ -19,6 +19,19 @@ Date.prototype.addDays = function(days) {
   return date;
 }
 
+const site_wrapper = (req, res) => {
+
+  try {
+    site(req,res);
+  }
+  catch (e) {
+    log_error({desc:"Unahandled error",error:e})
+    res.statusCode = 500;
+    res.end();
+  }
+
+}
+
 const site = (req, res) => {
 
   let path = req.url.split('?')[0].split('/');
@@ -44,6 +57,7 @@ const site = (req, res) => {
         res.end();
       }
       else {
+        
         res.statusCode = 200;
 
         content_type = '';
@@ -70,6 +84,7 @@ const site = (req, res) => {
 
         res.setHeader('Content-Type', content_type);
         res.end(data);
+
       }
 
     });
@@ -155,6 +170,10 @@ const site = (req, res) => {
   else if (path[path.length-1] == 'ping') {
     atlas_ping();
   }
+  else if (path[path.length-1] == 'error') {
+    res.statusCode = 500;
+    res.end();
+  }
   else {
     res.statusCode = 404;
     res.end();
@@ -166,7 +185,7 @@ run_server();
 
 function run_server () {
 
-    const server = http.createServer(site);
+    const server = http.createServer(site_wrapper);
 
     server.listen(port, () => {
       console.log(`Server running on port ${port}`);

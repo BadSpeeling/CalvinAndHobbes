@@ -24,20 +24,30 @@ function get_comic(container_id) {
     }
 
     checkImage()
-            .then((date) => {
-                $.get(utils.get_root() + '/comic?comic_id='+parse_comic_id(date), (comic_result) => {
-                        
-                    comic_result = JSON.parse(comic_result);
-                    comic_result.date = new Date(comic_result.date);
+        .then((date) => {
+            $.ajax(
+                {
+                    type:'GET',
+                    url: utils.get_root() + '/comic?comic_id='+parse_comic_id(date), 
+                    success:(comic_result) => {
+                    
+                        comic_result = JSON.parse(comic_result);
+                        comic_result.date = new Date(comic_result.date);
 
-                    set_comics(container_id, comic_result);
+                        set_comics(container_id, comic_result);
 
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-            .finally(() => {});
+                    },
+                    error:() => {
+                        handle_error();
+                    }
+                }
+            );
+        })
+        .catch((err) => {
+            handle_error();
+            console.log(err);
+        })
+        .finally(() => {});
     
 }
 
