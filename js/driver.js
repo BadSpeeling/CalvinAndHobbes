@@ -21,6 +21,7 @@ driver.loading.check_min_wait_time = function () {
 
 $(document).ready(() => {
 
+    show_wrapper('LoadingWrapper');
     load_comic_set();
     $('.ThisComicWinsBtn').click(comicSubmitBtnClick);
 
@@ -40,7 +41,6 @@ function load_comic_set() {
     reset_model('comic2');
 
     driver.loading.load_begin = Date.now();
-    show_wrapper('LoadingWrapper');
 
     get_comic('comic1');
     get_comic('comic2');
@@ -74,33 +74,24 @@ function show_wrapper(id) {
 
 }
 
-function handle_error () {
-    show_wrapper('ErrorWrapper');
-}
-
 function set_comics(container_id, comic_data) {
 
     var comicWrapper = $('#'+container_id+'.ComicWrapper');
     var infoWrapper = comicWrapper.find('.InfoWrapper');
 
-    if (comic_data.url && comic_data.date && comic_data.votes && comic_data.votes.wins && comic_data.votes.losses) {
-        comicWrapper.find('.ImgWrapper img').attr({'src':comic_data.url});
-        infoWrapper.find('.ComicDateValue').text(utils.pretty_date(comic_data.date));
-        infoWrapper.find('.WinsValue').text(comic_data.votes.wins);
-        infoWrapper.find('.WinPercentageValue').text(utils.pretty_percent(comic_data.votes));
+    comicWrapper.find('.ImgWrapper img').attr({'src':comic_data.url});
+    infoWrapper.find('.ComicDateValue').text(utils.pretty_date(comic_data.date));
+    infoWrapper.find('.WinsValue').text(comic_data.votes.wins);
+    infoWrapper.find('.WinPercentageValue').text(utils.pretty_percent(comic_data.votes));
 
-        driver.model[container_id] = {
-            "comic_id": parse_comic_id(comic_data.date),
-            "isLoaded": true
-        };
+    driver.model[container_id] = {
+        "comic_id": parse_comic_id(comic_data.date),
+        "isLoaded": true
+    };
 
-        if (can_show_comics()) {
-            show_wrapper('ComicsWrapper');
-            driver.loading.load_begin = null;
-        }
-    }
-    else {
-        throw new Error("comic_data is missing required data");
+    if (can_show_comics()) {
+        show_wrapper('ComicsWrapper');
+        driver.loading.load_begin = null;
     }
 
 }

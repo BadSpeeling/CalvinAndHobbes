@@ -1,16 +1,21 @@
 function comicSubmitBtnClick (e) {
 
-    try {
-        let winning_uxID = $(e.target).parents('.ComicWrapper').attr('id');
-        let losing_uxID = $(`.ComicWrapper:not(#${winning_uxID})`).attr('id');
+    setTimeout(() => {
+        show_wrapper('LoadingWrapper');
 
-        let vote_body = {"winner":get_comic_id(winning_uxID),"loser":get_comic_id(losing_uxID)}
+        try {
+            let winning_uxID = $(e.target).parents('.ComicWrapper').attr('id');
+            let losing_uxID = $(`.ComicWrapper:not(#${winning_uxID})`).attr('id');
 
-        submitVote(vote_body);
+            let vote_body = {"winner":get_comic_id(winning_uxID),"loser":get_comic_id(losing_uxID)}
 
-    } catch (e) {
-        handle_error();
-    }
+            submitVote(vote_body);
+
+        } catch (e) {
+            handle_error();
+        }
+
+    }, 250);
 
 }
 

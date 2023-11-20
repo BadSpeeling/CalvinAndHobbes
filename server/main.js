@@ -2,8 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const process = require('process');
 
-const {write_vote_result,mongo_get_comic} = require('./db_functionality');
-const {log_error} = require('./logging.js');
+const {write_vote_result,mongo_get_comic,write_error} = require('./db_functionality');
 
 root = process.cwd(); //"C:/Users/efrye/source/other/CalvinAndHobbes" "D:/CalvinAndHobbes"
 
@@ -25,7 +24,7 @@ const site_wrapper = (req, res) => {
     site(req,res);
   }
   catch (e) {
-    log_error({desc:"Unahandled error",error:e})
+    write_error({desc:"Unhandled error",error:e})
     res.statusCode = 500;
     res.end();
   }
@@ -52,7 +51,7 @@ const site = (req, res) => {
     const data = fs.readFile(root + req.url, (err,data) => {
 
       if (err) {
-        log_error({desc: req.url + " could not be found", error: err})
+        write_error({desc: req.url + " could not be found", error: err})
         res.statusCode = 404;
         res.end();
       }
@@ -129,7 +128,7 @@ const site = (req, res) => {
         })
         .catch((err) => {
 
-          log_error({desc:"Error loading comic data from DB",comic_id,error:err});
+          write_error({desc:"Error loading comic data from DB",comic_id,error:err});
 
           res.statusCode = 500;
           res.end();
@@ -138,8 +137,10 @@ const site = (req, res) => {
       
     }
     else {
+
       res.statusCode = 400;
       res.end();
+
     }
 
   }
@@ -155,9 +156,18 @@ const site = (req, res) => {
       let vote_doc = JSON.parse(body);
       
       if ('winner' in vote_doc && 'loser' in vote_doc) {
-        write_vote_result(vote_doc).catch((err) => {log_error({desc:"Error writing vote data to DB",vote_doc,error:err});});
-        res.statusCode = 200;
-        res.end();
+        write_vote_result(vote_doc)
+          .then(() => {
+            res.statusCode = 200;
+            res.end();
+          })
+          .catch((err) => 
+          {
+            write_error({desc:"Error writing vote data to DB",vote_doc,error:err});
+            res.statusCode = 500;
+            res.end();
+          });
+        
       }
       else {
         res.statusCode = 400;

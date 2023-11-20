@@ -52,4 +52,29 @@ async function mongo_get_comic(comic_id) {
 
 }
 
-module.exports = {write_vote_result,mongo_get_comic};
+async function write_error (body) {
+
+  let error_record = {...body,"error":body?.error?.message}
+  console.log(error_record);
+
+  let db_client = new_client();
+
+  if (db_client) {
+    try {
+      await db_client.connect();
+      const ch_voter_db = db_client.db("CH_Voter");
+      const error_coll = ch_voter_db.collection("errors");
+
+      await error_coll.insertOne(error_record);
+    }
+    catch (e) {
+      console.log("Could not write error to database. " + body.desc??"NO VALUE");
+    }
+    finally {
+      await db_client.close();
+    }
+  }
+
+}
+
+module.exports = {write_vote_result,mongo_get_comic,write_error};
