@@ -23,7 +23,7 @@ $(document).ready(() => {
 
     show_wrapper('LoadingWrapper');
     load_comic_set();
-    $('.ThisComicWinsBtn').click(comicSubmitBtnClick);
+    $('.ThisComicWinsBtn, .ImgWrapper img').click(comicSubmitBtnClick);
 
 });
 
